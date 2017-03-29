@@ -15,7 +15,7 @@ namespace TNW.Controllers
 
         public ActionResult About()
         {
-            ViewBag.Message = "Your application description page.";
+            ViewBag.Message = "This web application allows you to track your networth.";
 
             return View();
         }
