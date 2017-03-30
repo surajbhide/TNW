@@ -15,5 +15,7 @@ namespace TNW.Models
         [MaxLength(50)]
         [Display(Name = "Asset Type")]
         public string TypeName { get; set; }
+
+        public IEnumerable<AccountType> AccountTypes { get; set; }
     }
 }

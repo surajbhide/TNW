@@ -7,13 +7,13 @@ namespace TNW.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.1.3-40302")]
-    public sealed partial class AddDisplayAttributeToAsset : IMigrationMetadata
+    public sealed partial class AddAccountType : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(AddDisplayAttributeToAsset));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(AddAccountType));
         
         string IMigrationMetadata.Id
         {
-            get { return "201703301542213_AddDisplayAttributeToAsset"; }
+            get { return "201703302047067_AddAccountType"; }
         }
         
         string IMigrationMetadata.Source

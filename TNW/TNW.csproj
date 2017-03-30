@@ -199,6 +199,7 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\AccountTypeController.cs" />
     <Compile Include="Controllers\AssetTypeController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
@@ -218,11 +219,12 @@
     <Compile Include="Migrations\201703301538189_AddAssetType.Designer.cs">
       <DependentUpon>201703301538189_AddAssetType.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201703301542213_AddDisplayAttributeToAsset.cs" />
-    <Compile Include="Migrations\201703301542213_AddDisplayAttributeToAsset.Designer.cs">
-      <DependentUpon>201703301542213_AddDisplayAttributeToAsset.cs</DependentUpon>
+    <Compile Include="Migrations\201703302047067_AddAccountType.cs" />
+    <Compile Include="Migrations\201703302047067_AddAccountType.Designer.cs">
+      <DependentUpon>201703302047067_AddAccountType.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Models\AccountType.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\ApplicationDbContext.cs" />
     <Compile Include="Models\AssetType.cs" />
@@ -293,6 +295,11 @@
     <Content Include="Views\AssetType\Details.cshtml" />
     <Content Include="Views\AssetType\Edit.cshtml" />
     <Content Include="Views\AssetType\Index.cshtml" />
+    <Content Include="Views\AccountType\Create.cshtml" />
+    <Content Include="Views\AccountType\Delete.cshtml" />
+    <Content Include="Views\AccountType\Details.cshtml" />
+    <Content Include="Views\AccountType\Edit.cshtml" />
+    <Content Include="Views\AccountType\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -322,8 +329,8 @@
     <EmbeddedResource Include="Migrations\201703301538189_AddAssetType.resx">
       <DependentUpon>201703301538189_AddAssetType.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201703301542213_AddDisplayAttributeToAsset.resx">
-      <DependentUpon>201703301542213_AddDisplayAttributeToAsset.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201703302047067_AddAccountType.resx">
+      <DependentUpon>201703302047067_AddAccountType.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

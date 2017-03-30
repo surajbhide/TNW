@@ -1,0 +1,39 @@
+﻿@model TNW.Models.AccountType
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Delete an Account Type</h2>
+
+<h3>Are you sure?</h3>
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.AssetType.TypeName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AssetType.TypeName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>

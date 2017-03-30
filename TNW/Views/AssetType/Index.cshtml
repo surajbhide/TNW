@@ -4,6 +4,7 @@
     ViewBag.Title = "Asset Types";
 }
 
+<h2>Asset Types</h2>
 
 @if (User.Identity.IsAuthenticated)
 {
@@ -13,12 +14,6 @@
 }
 
 <table class="table table-striped">
-    <tr>
-        <th>
-            Asset Types in the system.
-        </th>
-        <th></th>
-    </tr>
 
 @foreach (var item in Model) {
     <tr>
