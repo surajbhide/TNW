@@ -1,0 +1,40 @@
+﻿@model IEnumerable<TNW.Models.AssetType>
+
+@{
+    ViewBag.Title = "Asset Types";
+}
+
+
+@if (User.Identity.IsAuthenticated)
+{
+    <p>
+        @Html.ActionLink("Create New", "Create")
+    </p>
+}
+
+<table class="table table-striped">
+    <tr>
+        <th>
+            Asset Types in the system.
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.TypeName)
+        </td>
+        <td>
+            @Html.ActionLink("Details", "Details", new { id=item.Id }) 
+            @if (User.Identity.IsAuthenticated)
+            {
+                @: |
+                @Html.ActionLink("Edit", "Edit", new { id=item.Id }) @: |
+                @Html.ActionLink("Delete", "Delete", new { id=item.Id })
+            }
+        </td>
+    </tr>
+}
+
+</table>
