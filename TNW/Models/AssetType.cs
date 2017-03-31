@@ -9,6 +9,10 @@ namespace TNW.Models
 {
     public class AssetType
     {
+        public AssetType()
+        {
+            AccountTypes = new List<AccountType>();
+        }
         public int Id { get; set; }
 
         [Required]

@@ -15,6 +15,7 @@ namespace TNW.Controllers
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
+        [AllowAnonymous]
         // GET: AccountType
         public ActionResult Index()
         {
@@ -22,6 +23,7 @@ namespace TNW.Controllers
             return View(accountTypes.ToList());
         }
 
+        [AllowAnonymous]
         // GET: AccountType/Details/5
         public ActionResult Details(int? id)
         {
@@ -33,7 +35,7 @@ namespace TNW.Controllers
                 .AccountTypes
                 .Where(a => a.Id == id)
                 .Include(a => a.AssetType)
-                .FirstOrDefault();
+                .SingleOrDefault();
 
             if (accountType == null)
             {
@@ -111,7 +113,7 @@ namespace TNW.Controllers
                 .AccountTypes
                 .Where(a => a.Id == id)
                 .Include(a => a.AssetType)
-                .FirstOrDefault();
+                .SingleOrDefault();
 
             if (accountType == null)
             {
