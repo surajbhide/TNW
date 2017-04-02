@@ -5,9 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TNW.Models
+namespace TNW.ViewModels
 {
-    public class AssetType
+    public class AssetTypeViewModel
     {
         public int Id { get; set; }
 
@@ -16,10 +16,7 @@ namespace TNW.Models
         [Display(Name = "Asset Type")]
         public string TypeName { get; set; }
 
+        [MaxLength(255)]
         public string Comments { get; set; }
-
-        public ApplicationUser Owner { get; set; }
-        public string OwnerId { get; set; }
-        public ICollection<PortfolioAccount> PortfolioAccounts { get; set; }
     }
 }

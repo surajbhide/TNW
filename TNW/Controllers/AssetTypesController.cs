@@ -6,10 +6,13 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using Microsoft.AspNet.Identity;
 using TNW.Models;
+using TNW.ViewModels;
 
 namespace TNW.Controllers
 {
+    [Authorize]
     public class AssetTypesController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
@@ -47,11 +50,17 @@ namespace TNW.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,TypeName,Comments")] AssetType assetType)
+        public ActionResult Create([Bind(Include = "Id,TypeName,Comments")] AssetTypeViewModel assetType)
         {
             if (ModelState.IsValid)
             {
-                db.AssetTypes.Add(assetType);
+                var asset = new AssetType
+                {
+                    TypeName = assetType.TypeName,
+                    Comments = assetType.Comments,
+                    OwnerId = User.Identity.GetUserId()
+                };
+                db.AssetTypes.Add(asset);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }

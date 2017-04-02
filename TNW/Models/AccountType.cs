@@ -19,7 +19,6 @@ namespace TNW.Models
 
         public string Comments { get; set; }
 
-        [Required]
         public ApplicationUser Owner { get; set; }
         public string OwnerId { get; set; }
 
