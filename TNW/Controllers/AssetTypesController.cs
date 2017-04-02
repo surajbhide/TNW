@@ -10,17 +10,18 @@ using TNW.Models;
 
 namespace TNW.Controllers
 {
-    public class AssetTypeController : Controller
+    public class AssetTypesController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
-        // GET: AssetType
+        // GET: AssetTypes
         public ActionResult Index()
         {
-            return View(db.AssetTypes.ToList());
+            var assetTypes = db.AssetTypes.Include(a => a.Owner);
+            return View(assetTypes.ToList());
         }
 
-        // GET: AssetType/Details/5
+        // GET: AssetTypes/Details/5
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -35,20 +36,18 @@ namespace TNW.Controllers
             return View(assetType);
         }
 
-        [Authorize]
-        // GET: AssetType/Create
+        // GET: AssetTypes/Create
         public ActionResult Create()
         {
             return View();
         }
 
-        // POST: AssetType/Create
+        // POST: AssetTypes/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
-        [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,TypeName")] AssetType assetType)
+        public ActionResult Create([Bind(Include = "Id,TypeName,Comments")] AssetType assetType)
         {
             if (ModelState.IsValid)
             {
@@ -60,8 +59,7 @@ namespace TNW.Controllers
             return View(assetType);
         }
 
-        // GET: AssetType/Edit/5
-        [Authorize]
+        // GET: AssetTypes/Edit/5
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -76,13 +74,12 @@ namespace TNW.Controllers
             return View(assetType);
         }
 
-        // POST: AssetType/Edit/5
+        // POST: AssetTypes/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
-        [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,TypeName")] AssetType assetType)
+        public ActionResult Edit([Bind(Include = "Id,TypeName,Comments,OwnerId")] AssetType assetType)
         {
             if (ModelState.IsValid)
             {
@@ -93,8 +90,7 @@ namespace TNW.Controllers
             return View(assetType);
         }
 
-        // GET: AssetType/Delete/5
-        [Authorize]
+        // GET: AssetTypes/Delete/5
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -109,8 +105,7 @@ namespace TNW.Controllers
             return View(assetType);
         }
 
-        // POST: AssetType/Delete/5
-        [Authorize]
+        // POST: AssetTypes/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)

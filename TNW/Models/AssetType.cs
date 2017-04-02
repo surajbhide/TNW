@@ -9,10 +9,6 @@ namespace TNW.Models
 {
     public class AssetType
     {
-        public AssetType()
-        {
-            AccountTypes = new List<AccountType>();
-        }
         public int Id { get; set; }
 
         [Required]
@@ -20,6 +16,11 @@ namespace TNW.Models
         [Display(Name = "Asset Type")]
         public string TypeName { get; set; }
 
-        public IEnumerable<AccountType> AccountTypes { get; set; }
+        public string Comments { get; set; }
+
+        [Required]
+        public ApplicationUser Owner { get; set; }
+        public string OwnerId { get; set; }
+        public ICollection<PortfolioAccount> PortfolioAccounts { get; set; }
     }
 }

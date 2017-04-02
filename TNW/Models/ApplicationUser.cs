@@ -1,4 +1,5 @@
-﻿using System.Data.Entity;
+﻿using System.Collections.Generic;
+using System.Data.Entity;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Identity;
@@ -10,6 +11,9 @@ namespace TNW.Models
     public class ApplicationUser : IdentityUser
     {
         public string Name { get; set; }
+        public ICollection<PortfolioAccount> PortfolioAccounts { get; set; }
+        public DbSet<AccountType> AccountTypes { get; set; }
+        public DbSet<AssetType> AssetTypes { get; set; }
 
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)
         {

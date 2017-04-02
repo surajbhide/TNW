@@ -17,8 +17,12 @@ namespace TNW.Models
         [MaxLength(255)]
         public string Name { get; set; }
 
-        public AssetType AssetType { get; set; }
+        public string Comments { get; set; }
 
-        public int AssetTypeId { get; set; }
+        [Required]
+        public ApplicationUser Owner { get; set; }
+        public string OwnerId { get; set; }
+
+        public ICollection<PortfolioAccount> PortfolioAccounts { get; set; }
     }
 }
