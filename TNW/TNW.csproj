@@ -204,6 +204,7 @@
     <Compile Include="Controllers\CurrencyTypesController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\PortfolioAccountsController.cs" />
     <Compile Include="Extensions\IdentityExtensions.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -231,6 +232,14 @@
     <Compile Include="Migrations\201704020552036_MadeCurrencyRequiredInPortFolioAccount.cs" />
     <Compile Include="Migrations\201704020552036_MadeCurrencyRequiredInPortFolioAccount.Designer.cs">
       <DependentUpon>201704020552036_MadeCurrencyRequiredInPortFolioAccount.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201704020603161_AddedCurrencyTypeIdforeignkeytoPortFolioAccount.cs" />
+    <Compile Include="Migrations\201704020603161_AddedCurrencyTypeIdforeignkeytoPortFolioAccount.Designer.cs">
+      <DependentUpon>201704020603161_AddedCurrencyTypeIdforeignkeytoPortFolioAccount.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201704020621165_RemovedLotOfRequiredFieldsFromPortfolioAccount.cs" />
+    <Compile Include="Migrations\201704020621165_RemovedLotOfRequiredFieldsFromPortfolioAccount.Designer.cs">
+      <DependentUpon>201704020621165_RemovedLotOfRequiredFieldsFromPortfolioAccount.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\CurrencyType.cs" />
@@ -321,6 +330,11 @@
     <Content Include="Views\CurrencyTypes\Details.cshtml" />
     <Content Include="Views\CurrencyTypes\Edit.cshtml" />
     <Content Include="Views\CurrencyTypes\Index.cshtml" />
+    <Content Include="Views\PortfolioAccounts\Create.cshtml" />
+    <Content Include="Views\PortfolioAccounts\Delete.cshtml" />
+    <Content Include="Views\PortfolioAccounts\Details.cshtml" />
+    <Content Include="Views\PortfolioAccounts\Edit.cshtml" />
+    <Content Include="Views\PortfolioAccounts\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -358,6 +372,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201704020552036_MadeCurrencyRequiredInPortFolioAccount.resx">
       <DependentUpon>201704020552036_MadeCurrencyRequiredInPortFolioAccount.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201704020603161_AddedCurrencyTypeIdforeignkeytoPortFolioAccount.resx">
+      <DependentUpon>201704020603161_AddedCurrencyTypeIdforeignkeytoPortFolioAccount.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201704020621165_RemovedLotOfRequiredFieldsFromPortfolioAccount.resx">
+      <DependentUpon>201704020621165_RemovedLotOfRequiredFieldsFromPortfolioAccount.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

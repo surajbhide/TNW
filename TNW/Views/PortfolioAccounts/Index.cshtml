@@ -1,0 +1,69 @@
+﻿@model IEnumerable<TNW.Models.PortfolioAccount>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>List of Accounts in @User.Identity.GetName()'s portfolio.</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.AccountType.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.AssetType.TypeName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CurrencyType.CurrencyName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.AccountHolder)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.IsActive)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FinancialInstitution)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.AccountNumber)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.AccountType.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.AssetType.TypeName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CurrencyType.CurrencyName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.AccountHolder)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.IsActive)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.FinancialInstitution)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.AccountNumber)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
+            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
+        </td>
+    </tr>
+}
+
+</table>

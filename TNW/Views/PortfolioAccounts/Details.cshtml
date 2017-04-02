@@ -1,0 +1,73 @@
+﻿@model TNW.Models.PortfolioAccount
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.AccountType.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AccountType.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.AssetType.TypeName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AssetType.TypeName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CurrencyType.CurrencyName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CurrencyType.CurrencyName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.AccountHolder)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AccountHolder)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.IsActive)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IsActive)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.FinancialInstitution)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FinancialInstitution)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.AccountNumber)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AccountNumber)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
