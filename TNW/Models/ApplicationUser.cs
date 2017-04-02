@@ -12,8 +12,9 @@ namespace TNW.Models
     {
         public string Name { get; set; }
         public ICollection<PortfolioAccount> PortfolioAccounts { get; set; }
-        public DbSet<AccountType> AccountTypes { get; set; }
-        public DbSet<AssetType> AssetTypes { get; set; }
+        public ICollection<AccountType> AccountTypes { get; set; }
+        public ICollection<AssetType> AssetTypes { get; set; }
+        public ICollection<CurrencyType> CurrencyTypes { get; set; }
 
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)
         {

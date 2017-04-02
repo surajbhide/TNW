@@ -9,6 +9,7 @@ namespace TNW.Models
         public DbSet<AccountType> AccountTypes { get; set; }
         public DbSet<PortfolioAccount> PortfolioAccounts { get; set; }
         public DbSet<AccountValue> AccountValues { get; set; }
+        public DbSet<CurrencyType> CurrencyTypes { get; set; }
 
         public ApplicationDbContext()
             : base("DefaultConnection", throwIfV1Schema: false)
