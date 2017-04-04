@@ -38,7 +38,9 @@ namespace TNW.Models
         public AssetType AssetType { get; set; }
         public int AssetTypeId { get; set; }
 
+        [Display(Name = "Currency")]
         public CurrencyType CurrencyType { get; set; }
+
         public int CurrencyTypeId { get; set; }
     }
 }

@@ -13,12 +13,16 @@ namespace TNW.Models
         public int Id { get; set; }
 
         [Column(TypeName = "Money")]
+        [Display(Name = "Account Value")]
         public decimal MonthlyBalance { get; set; }
 
+        [DisplayFormat(DataFormatString = "{0:MM/yyyy}", ApplyFormatInEditMode = true)]
+        [Display(Name = "Month and Year")]
         public DateTime MonthYear { get; set; }
 
-        [Required]
         public PortfolioAccount PortfolioAccount { get; set; }
+
+        [Display(Name = "Portfolio Account")]
         public int PortfolioAccountId { get; set; }
     }
 }

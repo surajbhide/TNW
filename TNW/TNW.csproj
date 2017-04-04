@@ -200,6 +200,7 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AccountTypesController.cs" />
+    <Compile Include="Controllers\AccountValuesController.cs" />
     <Compile Include="Controllers\AssetTypesController.cs" />
     <Compile Include="Controllers\CurrencyTypesController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -335,6 +336,11 @@
     <Content Include="Views\PortfolioAccounts\Details.cshtml" />
     <Content Include="Views\PortfolioAccounts\Edit.cshtml" />
     <Content Include="Views\PortfolioAccounts\Index.cshtml" />
+    <Content Include="Views\AccountValues\Create.cshtml" />
+    <Content Include="Views\AccountValues\Delete.cshtml" />
+    <Content Include="Views\AccountValues\Details.cshtml" />
+    <Content Include="Views\AccountValues\Edit.cshtml" />
+    <Content Include="Views\AccountValues\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

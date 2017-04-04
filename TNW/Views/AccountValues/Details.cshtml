@@ -1,0 +1,42 @@
+﻿@model TNW.Models.AccountValue
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>AccountValue</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.PortfolioAccountId)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PortfolioAccountId)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.MonthlyBalance)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.MonthlyBalance)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.MonthYear)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.MonthYear)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<TNW.Models.PortfolioAccount>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Portfolio Accounts.";
 }
 
 <h2>List of Accounts in @User.Identity.GetName()'s portfolio.</h2>
@@ -9,8 +9,17 @@
 <p>
     @Html.ActionLink("Create New", "Create")
 </p>
-<table class="table">
+<table class="table table-striped">
     <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.AccountHolder)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.AccountNumber)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FinancialInstitution)
+        </th>
         <th>
             @Html.DisplayNameFor(model => model.AccountType.Name)
         </th>
@@ -21,22 +30,22 @@
             @Html.DisplayNameFor(model => model.CurrencyType.CurrencyName)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.AccountHolder)
-        </th>
-        <th>
             @Html.DisplayNameFor(model => model.IsActive)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.FinancialInstitution)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.AccountNumber)
         </th>
         <th></th>
     </tr>
 
 @foreach (var item in Model) {
     <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.AccountHolder)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.AccountNumber)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.FinancialInstitution)
+        </td>
         <td>
             @Html.DisplayFor(modelItem => item.AccountType.Name)
         </td>
@@ -47,16 +56,7 @@
             @Html.DisplayFor(modelItem => item.CurrencyType.CurrencyName)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.AccountHolder)
-        </td>
-        <td>
             @Html.DisplayFor(modelItem => item.IsActive)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.FinancialInstitution)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.AccountNumber)
         </td>
         <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
