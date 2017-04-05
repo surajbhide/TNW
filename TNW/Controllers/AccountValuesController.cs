@@ -43,6 +43,7 @@ namespace TNW.Controllers
         {
             var userId = User.Identity.GetUserId();
 
+            //TODO: remove duplicate code into a single method
             var accounts = db.PortfolioAccounts
                 .Where(p => p.OwnerId == userId)
                 .Include(p => p.AccountType)
@@ -71,7 +72,18 @@ namespace TNW.Controllers
                 return RedirectToAction("Index");
             }
 
-            ViewBag.PortfolioAccountId = new SelectList(db.PortfolioAccounts, "Id", "Description", accountValue.PortfolioAccountId);
+            var userId = User.Identity.GetUserId();
+            var accounts = db.PortfolioAccounts
+                .Where(p => p.OwnerId == userId)
+                .Include(p => p.AccountType)
+                .AsEnumerable()
+                .Select(s => new
+                {
+                    Id = s.Id,
+                    Description = $"{s.AccountNumber} - {s.AccountHolder} - {s.FinancialInstitution} - {s.AccountType.Name}",
+                })
+                .ToList();
+            ViewBag.PortfolioAccountId = new SelectList(accounts, "Id", "Description", accountValue.PortfolioAccountId);
             return View(accountValue);
         }
 
@@ -87,7 +99,20 @@ namespace TNW.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.PortfolioAccountId = new SelectList(db.PortfolioAccounts, "Id", "AccountNumber", accountValue.PortfolioAccountId);
+
+            var userId = User.Identity.GetUserId();
+            var accounts = db.PortfolioAccounts
+                .Where(p => p.OwnerId == userId)
+                .Include(p => p.AccountType)
+                .AsEnumerable()
+                .Select(s => new
+                {
+                    Id = s.Id,
+                    Description = $"{s.AccountNumber} - {s.AccountHolder} - {s.FinancialInstitution} - {s.AccountType.Name}",
+                })
+                .ToList();
+
+            ViewBag.PortfolioAccountId = new SelectList(accounts, "Id", "Description", accountValue.PortfolioAccountId);
             return View(accountValue);
         }
 
@@ -104,7 +129,20 @@ namespace TNW.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.PortfolioAccountId = new SelectList(db.PortfolioAccounts, "Id", "AccountNumber", accountValue.PortfolioAccountId);
+
+            var userId = User.Identity.GetUserId();
+            var accounts = db.PortfolioAccounts
+                .Where(p => p.OwnerId == userId)
+                .Include(p => p.AccountType)
+                .AsEnumerable()
+                .Select(s => new
+                {
+                    Id = s.Id,
+                    Description = $"{s.AccountNumber} - {s.AccountHolder} - {s.FinancialInstitution} - {s.AccountType.Name}",
+                })
+                .ToList();
+
+            ViewBag.PortfolioAccountId = new SelectList(accounts, "Id", "Description", accountValue.PortfolioAccountId);
             return View(accountValue);
         }
 
