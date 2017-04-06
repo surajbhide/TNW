@@ -21,7 +21,6 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
                     <li>@Html.ActionLink("Account Types", "Index", "AccountTypes")</li>
                     <li>@Html.ActionLink("Asset Types", "Index", "AssetTypes")</li>
                     <li>@Html.ActionLink("Portfolio Account", "Index", "PortfolioAccounts")</li>
@@ -33,9 +32,10 @@
         </div>
     </div>
     <div class="container body-content">
-        @RenderBody()
+        <div>
+            @RenderBody()
+        </div>
         <footer>
-        <hr />
             <p>&copy; @DateTime.Now.Year - Networth Tracker.</p>
         </footer>
     </div>

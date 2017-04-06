@@ -24,12 +24,6 @@ textarea {
 }
     */
 
-/* my customizations */
 footer {
-    position: fixed;
-    bottom: 0;
-    background-color: #eee;
-    width: 100%;
-    left: 0;
     text-align: center;
 }
