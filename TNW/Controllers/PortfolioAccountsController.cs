@@ -8,6 +8,7 @@ using System.Web;
 using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
 using TNW.Extensions;
+using TNW.Infrastructure;
 using TNW.Models;
 using TNW.ViewModels;
 

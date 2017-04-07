@@ -6,7 +6,10 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using AutoMapper;
 using Microsoft.AspNet.Identity;
+using TNW.Infrastructure;
+using TNW.Interfaces;
 using TNW.Models;
 using TNW.ViewModels;
 
@@ -15,28 +18,19 @@ namespace TNW.Controllers
     [Authorize]
     public class AccountTypesController : Controller
     {
-        private ApplicationDbContext db = new ApplicationDbContext();
+        IUnitOfWork _unitOfWork;
+
+        public AccountTypesController(IUnitOfWork uow)
+        {
+            _unitOfWork = uow;
+        }
 
         // GET: AccountTypes
         public ActionResult Index()
         {
-            var accountTypes = db.AccountTypes.Include(a => a.Owner);
-            return View(accountTypes.ToList());
-        }
-
-        // GET: AccountTypes/Details/5
-        public ActionResult Details(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            AccountType accountType = db.AccountTypes.Find(id);
-            if (accountType == null)
-            {
-                return HttpNotFound();
-            }
-            return View(accountType);
+            var accountTypes = _unitOfWork.AccountTypes.GetAll();
+            var viewModel = Mapper.Map<List<AccountTypeViewModel>>(accountTypes);
+            return View(viewModel);
         }
 
         // GET: AccountTypes/Create
@@ -46,8 +40,6 @@ namespace TNW.Controllers
         }
 
         // POST: AccountTypes/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "Id,Name,Comments")] AccountTypeViewModel model)
@@ -60,8 +52,9 @@ namespace TNW.Controllers
                     Comments = model.Comments,
                     OwnerId = User.Identity.GetUserId(),
                 };
-                db.AccountTypes.Add(account);
-                db.SaveChanges();
+                account = Mapper.Map<AccountType>(model);
+                _unitOfWork.AccountTypes.Add(account);
+                _unitOfWork.Complete();
                 return RedirectToAction("Index");
             }
 
@@ -75,28 +68,28 @@ namespace TNW.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            AccountType accountType = db.AccountTypes.Find(id);
-            if (accountType == null)
+            var ac = _unitOfWork.AccountTypes.Get(id.Value);
+            if (ac == null)
             {
                 return HttpNotFound();
             }
-            return View(accountType);
+            var vm = Mapper.Map<AccountTypeViewModel>(ac);
+            return View(vm);
         }
 
         // POST: AccountTypes/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Name,Comments")] AccountType accountType)
+        public ActionResult Edit([Bind(Include = "Id,Name,Comments")] AccountTypeViewModel model)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(accountType).State = EntityState.Modified;
-                db.SaveChanges();
+                var accountType = Mapper.Map<AccountType>(model);
+                _unitOfWork.AccountTypes.Update(accountType);
+                _unitOfWork.Complete();
                 return RedirectToAction("Index");
             }
-            return View(accountType);
+            return View(model);
         }
 
         // GET: AccountTypes/Delete/5
@@ -106,12 +99,12 @@ namespace TNW.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            AccountType accountType = db.AccountTypes.Find(id);
+            var accountType = _unitOfWork.AccountTypes.Get(id.Value);
             if (accountType == null)
             {
                 return HttpNotFound();
             }
-            return View(accountType);
+            return View(Mapper.Map<AccountTypeViewModel>(accountType));
         }
 
         // POST: AccountTypes/Delete/5
@@ -119,19 +112,14 @@ namespace TNW.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            AccountType accountType = db.AccountTypes.Find(id);
-            db.AccountTypes.Remove(accountType);
-            db.SaveChanges();
-            return RedirectToAction("Index");
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
+            var record = _unitOfWork.AccountTypes.Get(id);
+            if (record == null)
             {
-                db.Dispose();
+                return HttpNotFound();
             }
-            base.Dispose(disposing);
+            _unitOfWork.AccountTypes.Remove(record);
+            _unitOfWork.Complete();
+            return RedirectToAction("Index");
         }
     }
 }

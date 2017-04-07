@@ -10,7 +10,6 @@ namespace TNW.ViewModels
     public class AccountTypeViewModel
     {
         public int Id { get; set; }
-
         [Required]
         [Display(Name = "Account Type")]
         [MaxLength(255)]

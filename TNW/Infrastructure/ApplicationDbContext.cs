@@ -1,9 +1,11 @@
 ﻿using System.Data.Entity;
 using Microsoft.AspNet.Identity.EntityFramework;
+using TNW.Interfaces;
+using TNW.Models;
 
-namespace TNW.Models
+namespace TNW.Infrastructure
 {
-    public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
+    public class ApplicationDbContext : IdentityDbContext<ApplicationUser>, IApplicationDbContext
     {
         public DbSet<AssetType> AssetTypes { get; set; }
         public DbSet<AccountType> AccountTypes { get; set; }
