@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TNW.Interfaces;
+using TNW.Models;
 
 namespace TNW.Infrastructure
 {
@@ -11,12 +12,14 @@ namespace TNW.Infrastructure
     {
         private ApplicationDbContext _context;
 
-        public IAccountTypeRepository AccountTypes { get; private set; }
+        public IGenericRepository<AccountType> AccountTypes { get; private set; }
+        public IGenericRepository<AssetType> AssetTypes { get; private set; }
 
         public UnitOfWork(ApplicationDbContext context)
         {
             _context = context;
-            AccountTypes = new AccountTypeRepository(_context);
+            AccountTypes = new GenericRepository<AccountType>(_context);
+            AssetTypes = new GenericRepository<AssetType>(_context);
         }
 
         public void Complete()

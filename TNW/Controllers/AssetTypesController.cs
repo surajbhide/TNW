@@ -6,8 +6,10 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using AutoMapper;
 using Microsoft.AspNet.Identity;
 using TNW.Infrastructure;
+using TNW.Interfaces;
 using TNW.Models;
 using TNW.ViewModels;
 
@@ -16,28 +18,19 @@ namespace TNW.Controllers
     [Authorize]
     public class AssetTypesController : Controller
     {
-        private ApplicationDbContext db = new ApplicationDbContext();
+        private IUnitOfWork _unitOfWork;
+
+        public AssetTypesController(IUnitOfWork uow)
+        {
+            _unitOfWork = uow;
+        }
 
         // GET: AssetTypes
         public ActionResult Index()
         {
-            var assetTypes = db.AssetTypes.Include(a => a.Owner);
-            return View(assetTypes.ToList());
-        }
-
-        // GET: AssetTypes/Details/5
-        public ActionResult Details(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            AssetType assetType = db.AssetTypes.Find(id);
-            if (assetType == null)
-            {
-                return HttpNotFound();
-            }
-            return View(assetType);
+            var assetTypes = _unitOfWork.AssetTypes.GetAll();
+            var assetVM = Mapper.Map<List<AssetTypeViewModel>>(assetTypes);
+            return View(assetVM);
         }
 
         // GET: AssetTypes/Create
@@ -55,14 +48,10 @@ namespace TNW.Controllers
         {
             if (ModelState.IsValid)
             {
-                var asset = new AssetType
-                {
-                    TypeName = assetType.TypeName,
-                    Comments = assetType.Comments,
-                    OwnerId = User.Identity.GetUserId()
-                };
-                db.AssetTypes.Add(asset);
-                db.SaveChanges();
+                var asset = Mapper.Map<AssetType>(assetType);
+                asset.OwnerId = User.Identity.GetUserId();
+                _unitOfWork.AssetTypes.Add(asset);
+                _unitOfWork.Complete();
                 return RedirectToAction("Index");
             }
 
@@ -76,12 +65,13 @@ namespace TNW.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            AssetType assetType = db.AssetTypes.Find(id);
+            var assetType = _unitOfWork.AssetTypes.Get(id.Value);
             if (assetType == null)
             {
                 return HttpNotFound();
             }
-            return View(assetType);
+            var vm = Mapper.Map<AssetTypeViewModel>(assetType);
+            return View(vm);
         }
 
         // POST: AssetTypes/Edit/5
@@ -89,15 +79,16 @@ namespace TNW.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,TypeName,Comments,OwnerId")] AssetType assetType)
+        public ActionResult Edit([Bind(Include = "Id,TypeName,Comments")] AssetTypeViewModel vm)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(assetType).State = EntityState.Modified;
-                db.SaveChanges();
+                var assetType = Mapper.Map<AssetType>(vm);
+                _unitOfWork.AssetTypes.Update(assetType);
+                _unitOfWork.Complete();
                 return RedirectToAction("Index");
             }
-            return View(assetType);
+            return View(vm);
         }
 
         // GET: AssetTypes/Delete/5
@@ -107,12 +98,13 @@ namespace TNW.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            AssetType assetType = db.AssetTypes.Find(id);
+            AssetType assetType = _unitOfWork.AssetTypes.Get(id.Value);
             if (assetType == null)
             {
                 return HttpNotFound();
             }
-            return View(assetType);
+            var vm = Mapper.Map<AssetTypeViewModel>(assetType);
+            return View(vm);
         }
 
         // POST: AssetTypes/Delete/5
@@ -120,19 +112,14 @@ namespace TNW.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            AssetType assetType = db.AssetTypes.Find(id);
-            db.AssetTypes.Remove(assetType);
-            db.SaveChanges();
-            return RedirectToAction("Index");
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
+            AssetType assetType = _unitOfWork.AssetTypes.Get(id);
+            if (assetType == null)
             {
-                db.Dispose();
+                return HttpNotFound();
             }
-            base.Dispose(disposing);
+            _unitOfWork.AssetTypes.Remove(assetType);
+            _unitOfWork.Complete();
+            return RedirectToAction("Index");
         }
     }
 }

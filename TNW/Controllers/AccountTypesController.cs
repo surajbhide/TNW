@@ -46,13 +46,8 @@ namespace TNW.Controllers
         {
             if (ModelState.IsValid)
             {
-                var account = new AccountType
-                {
-                    Name = model.Name,
-                    Comments = model.Comments,
-                    OwnerId = User.Identity.GetUserId(),
-                };
-                account = Mapper.Map<AccountType>(model);
+                var account = Mapper.Map<AccountType>(model);
+                account.OwnerId = User.Identity.GetUserId();
                 _unitOfWork.AccountTypes.Add(account);
                 _unitOfWork.Complete();
                 return RedirectToAction("Index");

@@ -3,12 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TNW.Models;
 
 namespace TNW.Interfaces
 {
     public interface IUnitOfWork
     {
-        IAccountTypeRepository AccountTypes { get; }
+        IGenericRepository<AccountType> AccountTypes { get; }
+        IGenericRepository<AssetType> AssetTypes { get; }
         void Complete();
     }
 }

@@ -14,6 +14,7 @@ namespace TNW.App_Start
         public AutoMapperProfile()
         {
             CreateMap<AccountType, AccountTypeViewModel>().ReverseMap();
+            CreateMap<AssetType, AssetTypeViewModel>().ReverseMap();
         }
     }
 }
