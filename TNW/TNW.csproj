@@ -353,7 +353,6 @@
     <Content Include="Views\AccountTypes\Index.cshtml" />
     <Content Include="Views\CurrencyTypes\Create.cshtml" />
     <Content Include="Views\CurrencyTypes\Delete.cshtml" />
-    <Content Include="Views\CurrencyTypes\Details.cshtml" />
     <Content Include="Views\CurrencyTypes\Edit.cshtml" />
     <Content Include="Views\CurrencyTypes\Index.cshtml" />
     <Content Include="Views\PortfolioAccounts\Create.cshtml" />

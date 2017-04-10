@@ -15,11 +15,14 @@ namespace TNW.Infrastructure
         public IGenericRepository<AccountType> AccountTypes { get; private set; }
         public IGenericRepository<AssetType> AssetTypes { get; private set; }
 
+        public IGenericRepository<CurrencyType> CurrencyTypes { get; private set; }
+
         public UnitOfWork(ApplicationDbContext context)
         {
             _context = context;
             AccountTypes = new GenericRepository<AccountType>(_context);
             AssetTypes = new GenericRepository<AssetType>(_context);
+            CurrencyTypes = new GenericRepository<CurrencyType>(_context);
         }
 
         public void Complete()
