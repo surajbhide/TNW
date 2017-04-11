@@ -17,6 +17,7 @@ namespace TNW.App_Start
             CreateMap<AssetType, AssetTypeViewModel>().ReverseMap();
             CreateMap<CurrencyType, CurrencyTypeViewModel>().ReverseMap();
             CreateMap<PortfolioAccount, PortfolioAccountViewModel>().ReverseMap();
+            CreateMap<AccountValue, AccountValueViewModel>().ReverseMap();
         }
     }
 }

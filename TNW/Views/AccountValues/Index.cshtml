@@ -1,4 +1,4 @@
-﻿@model IEnumerable<TNW.Models.AccountValue>
+﻿@model IEnumerable<AccountValueViewModel>
 
 @{
     ViewBag.Title = "Index";
@@ -26,7 +26,9 @@
 @foreach (var item in Model) {
     <tr>
         <td>
-            @Html.DisplayFor(modelItem => item.PortfolioAccount.AccountNumber)
+            @Html.DisplayFor(modelItem => item.PortfolioAccount.AccountNumber) -
+            @Html.DisplayFor(modelItem => item.PortfolioAccount.AccountHolder) -
+            @Html.DisplayFor(modelItem => item.PortfolioAccount.FinancialInstitution)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.MonthlyBalance)
@@ -36,7 +38,6 @@
         </td>
         <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
-            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
             @Html.ActionLink("Delete", "Delete", new { id=item.Id })
         </td>
     </tr>

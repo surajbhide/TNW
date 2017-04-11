@@ -21,7 +21,7 @@ namespace TNW.ViewModels
         [Display(Name = "Month and Year")]
         public DateTime MonthYear { get; set; }
 
-        public PortfolioAccount PortfolioAccount { get; set; }
+        public PortfolioAccountViewModel PortfolioAccount { get; set; }
 
         [Display(Name = "Portfolio Account")]
         public int PortfolioAccountId { get; set; }

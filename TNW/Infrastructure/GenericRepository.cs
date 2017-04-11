@@ -37,9 +37,13 @@ namespace TNW.Infrastructure
             return q.FirstOrDefault(where);
         }
 
-        public IEnumerable<T> GetAll(params Expression<Func<T, object>>[] includeExpressions)
+        public IEnumerable<T> GetAll(Expression<Func<T, bool>> where, params Expression<Func<T, object>>[] includeExpressions)
         {
             IQueryable<T> q = _db.Set<T>();
+            if (where != null)
+            {
+                q = q.Where(where);
+            }
             foreach (var include in includeExpressions)
             {
                 q = q.Include(include);

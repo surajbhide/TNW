@@ -10,7 +10,7 @@ namespace TNW.Interfaces
         void Add(T entity);
         T Get(int id);
         T Get(Expression<Func<T, bool>> where, params Expression<Func<T, object>>[] includeExpressions);
-        IEnumerable<T> GetAll(params Expression<Func<T, object>>[] includeExpressions);
+        IEnumerable<T> GetAll(Expression<Func<T, bool>> where = null, params Expression<Func<T, object>>[] includeExpressions);
         void Remove(T entity);
         void Update(T entity);
     }

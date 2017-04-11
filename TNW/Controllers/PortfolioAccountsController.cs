@@ -29,7 +29,7 @@ namespace TNW.Controllers
         // GET: PortfolioAccounts
         public ActionResult Index()
         {
-            var portfolioAccounts = _unitOfWork.PortfolioAccounts.GetAll(p => p.AccountType);
+            var portfolioAccounts = _unitOfWork.PortfolioAccounts.GetAll(null, p => p.AccountType);
             var vm = Mapper.Map<List<PortfolioAccountViewModel>>(portfolioAccounts);
             return View(vm);
         }

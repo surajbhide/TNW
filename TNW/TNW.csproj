@@ -362,7 +362,6 @@
     <Content Include="Views\PortfolioAccounts\Index.cshtml" />
     <Content Include="Views\AccountValues\Create.cshtml" />
     <Content Include="Views\AccountValues\Delete.cshtml" />
-    <Content Include="Views\AccountValues\Details.cshtml" />
     <Content Include="Views\AccountValues\Edit.cshtml" />
     <Content Include="Views\AccountValues\Index.cshtml" />
   </ItemGroup>

@@ -19,6 +19,8 @@ namespace TNW.Infrastructure
 
         public IGenericRepository<PortfolioAccount> PortfolioAccounts { get; private set; }
 
+        public IGenericRepository<AccountValue> AccountValues { get; private set; }
+
         public UnitOfWork(ApplicationDbContext context)
         {
             _context = context;
@@ -26,6 +28,7 @@ namespace TNW.Infrastructure
             AssetTypes = new GenericRepository<AssetType>(_context);
             CurrencyTypes = new GenericRepository<CurrencyType>(_context);
             PortfolioAccounts = new GenericRepository<PortfolioAccount>(_context);
+            AccountValues = new GenericRepository<AccountValue>(_context);
         }
 
         public void Complete()
