@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 using TNW.Interfaces;
@@ -25,9 +27,24 @@ namespace TNW.Infrastructure
             return _db.Set<T>().Find(id);
         }
 
-        public IEnumerable<T> GetAll()
+        public T Get(Expression<Func<T, bool>> where, params Expression<Func<T, object>>[] includeExpressions)
         {
-            return _db.Set<T>().AsEnumerable();
+            IQueryable<T> q = _db.Set<T>();
+            foreach (var include in includeExpressions)
+            {
+                q = q.Include(include);
+            }
+            return q.FirstOrDefault(where);
+        }
+
+        public IEnumerable<T> GetAll(params Expression<Func<T, object>>[] includeExpressions)
+        {
+            IQueryable<T> q = _db.Set<T>();
+            foreach (var include in includeExpressions)
+            {
+                q = q.Include(include);
+            }
+            return q.AsEnumerable();
         }
 
         public void Remove(T entity)

@@ -12,6 +12,7 @@ namespace TNW.Interfaces
         IGenericRepository<AccountType> AccountTypes { get; }
         IGenericRepository<AssetType> AssetTypes { get; }
         IGenericRepository<CurrencyType> CurrencyTypes { get; }
+        IGenericRepository<PortfolioAccount> PortfolioAccounts { get; }
         void Complete();
     }
 }

@@ -1,4 +1,4 @@
-﻿@model IEnumerable<TNW.Models.PortfolioAccount>
+﻿@model IEnumerable<PortfolioAccountViewModel>
 
 @{
     ViewBag.Title = "Portfolio Accounts.";
@@ -23,15 +23,6 @@
         <th>
             @Html.DisplayNameFor(model => model.AccountType.Name)
         </th>
-        <th>
-            @Html.DisplayNameFor(model => model.AssetType.TypeName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.CurrencyType.CurrencyName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.IsActive)
-        </th>
         <th></th>
     </tr>
 
@@ -48,15 +39,6 @@
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.AccountType.Name)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.AssetType.TypeName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.CurrencyType.CurrencyName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.IsActive)
         </td>
         <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |

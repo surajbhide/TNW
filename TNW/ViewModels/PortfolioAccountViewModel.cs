@@ -27,15 +27,15 @@ namespace TNW.ViewModels
         [Display(Name = "Account Number")]
         public string AccountNumber { get; set; }
 
-        public AccountType AccountType { get; set; }
+        public AccountTypeViewModel AccountType { get; set; }
         [Display(Name = "Account Type")]
         public int AccountTypeId { get; set; }
 
-        public AssetType AssetType { get; set; }
+        public AssetTypeViewModel AssetType { get; set; }
         [Display(Name = "Asset Type")]
         public int AssetTypeId { get; set; }
 
-        public CurrencyType CurrencyType { get; set; }
+        public CurrencyTypeViewModel CurrencyType { get; set; }
         [Display(Name = "Currency")]
         public int CurrencyTypeId { get; set; }
     }

@@ -6,9 +6,11 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using AutoMapper;
 using Microsoft.AspNet.Identity;
 using TNW.Extensions;
 using TNW.Infrastructure;
+using TNW.Interfaces;
 using TNW.Models;
 using TNW.ViewModels;
 
@@ -17,13 +19,19 @@ namespace TNW.Controllers
     [Authorize]
     public class PortfolioAccountsController : Controller
     {
-        private ApplicationDbContext db = new ApplicationDbContext();
+        private IUnitOfWork _unitOfWork;
+
+        public PortfolioAccountsController(IUnitOfWork uow)
+        {
+            _unitOfWork = uow;
+        }
 
         // GET: PortfolioAccounts
         public ActionResult Index()
         {
-            var portfolioAccounts = db.PortfolioAccounts.Include(p => p.AccountType).Include(p => p.AssetType).Include(p => p.CurrencyType).Include(p => p.Owner);
-            return View(portfolioAccounts.ToList());
+            var portfolioAccounts = _unitOfWork.PortfolioAccounts.GetAll(p => p.AccountType);
+            var vm = Mapper.Map<List<PortfolioAccountViewModel>>(portfolioAccounts);
+            return View(vm);
         }
 
         // GET: PortfolioAccounts/Details/5
@@ -33,26 +41,22 @@ namespace TNW.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            PortfolioAccount portfolioAccount = db
-                .PortfolioAccounts
-                .Where(p => p.Id == id)
-                .Include(p => p.AccountType)
-                .Include(p => p.AssetType)
-                .Include(p => p.CurrencyType)
-                .SingleOrDefault();
+            var portfolioAccount = _unitOfWork
+                .PortfolioAccounts.Get(p => p.Id == id, p => p.AccountType, p => p.AssetType, p => p.CurrencyType);
             if (portfolioAccount == null)
             {
                 return HttpNotFound();
             }
-            return View(portfolioAccount);
+            var vm = Mapper.Map<PortfolioAccountViewModel>(portfolioAccount);
+            return View(vm);
         }
 
         // GET: PortfolioAccounts/Create
         public ActionResult Create()
         {
-            ViewBag.AccountTypeId = new SelectList(db.AccountTypes, "Id", "Name");
-            ViewBag.AssetTypeId = new SelectList(db.AssetTypes, "Id", "TypeName");
-            ViewBag.CurrencyTypeId = new SelectList(db.CurrencyTypes, "Id", "CurrencyName");
+            ViewBag.AccountTypeId = new SelectList(_unitOfWork.AccountTypes.GetAll(), "Id", "Name");
+            ViewBag.AssetTypeId = new SelectList(_unitOfWork.AssetTypes.GetAll(), "Id", "TypeName");
+            ViewBag.CurrencyTypeId = new SelectList(_unitOfWork.CurrencyTypes.GetAll(), "Id", "CurrencyName");
             var model = new PortfolioAccountViewModel
             {
                 IsActive = true,
@@ -70,26 +74,22 @@ namespace TNW.Controllers
         {
             if (ModelState.IsValid)
             {
-                var newAccount = new PortfolioAccount
-                {
-                    AccountHolder = model.AccountHolder,
-                    AccountNumber = model.AccountNumber,
-                    AccountTypeId = model.AccountTypeId,
-                    AssetTypeId = model.AssetTypeId,
-                    CurrencyTypeId = model.CurrencyTypeId,
-                    FinancialInstitution = model.FinancialInstitution,
-                    IsActive = model.IsActive,
-                    OwnerId = User.Identity.GetUserId(),
-                };
-                db.PortfolioAccounts.Add(newAccount);
-                db.SaveChanges();
+                var newAccount = Mapper.Map<PortfolioAccount>(model);
+                newAccount.OwnerId = User.Identity.GetUserId();
+                _unitOfWork.PortfolioAccounts.Add(newAccount);
+                _unitOfWork.Complete();
                 return RedirectToAction("Index");
             }
 
-            ViewBag.AccountTypeId = new SelectList(db.AccountTypes, "Id", "Name", model.AccountTypeId);
-            ViewBag.AssetTypeId = new SelectList(db.AssetTypes, "Id", "TypeName", model.AssetTypeId);
-            ViewBag.CurrencyTypeId = new SelectList(db.CurrencyTypes, "Id", "CurrencyName", model.CurrencyTypeId);
+            SetupSelectList(model);
             return View(model);
+        }
+
+        private void SetupSelectList(PortfolioAccountViewModel model)
+        {
+            ViewBag.AccountTypeId = new SelectList(_unitOfWork.AccountTypes.GetAll(), "Id", "Name", model.AccountTypeId);
+            ViewBag.AssetTypeId = new SelectList(_unitOfWork.AssetTypes.GetAll(), "Id", "TypeName", model.AssetTypeId);
+            ViewBag.CurrencyTypeId = new SelectList(_unitOfWork.CurrencyTypes.GetAll(), "Id", "CurrencyName", model.CurrencyTypeId);
         }
 
         // GET: PortfolioAccounts/Edit/5
@@ -99,15 +99,14 @@ namespace TNW.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            PortfolioAccount portfolioAccount = db.PortfolioAccounts.Find(id);
+            var portfolioAccount = _unitOfWork.PortfolioAccounts.Get(id.Value);
             if (portfolioAccount == null)
             {
                 return HttpNotFound();
             }
-            ViewBag.AccountTypeId = new SelectList(db.AccountTypes, "Id", "Name", portfolioAccount.AccountTypeId);
-            ViewBag.AssetTypeId = new SelectList(db.AssetTypes, "Id", "TypeName", portfolioAccount.AssetTypeId);
-            ViewBag.CurrencyTypeId = new SelectList(db.CurrencyTypes, "Id", "CurrencyName", portfolioAccount.CurrencyTypeId);
-            return View(portfolioAccount);
+            var vm = Mapper.Map<PortfolioAccountViewModel>(portfolioAccount);
+            SetupSelectList(vm);
+            return View(vm);
         }
 
         // POST: PortfolioAccounts/Edit/5
@@ -115,18 +114,17 @@ namespace TNW.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,OwnerId,AccountHolder,IsActive,FinancialInstitution,AccountNumber,AccountTypeId,AssetTypeId,CurrencyTypeId")] PortfolioAccount portfolioAccount)
+        public ActionResult Edit([Bind(Include = "Id,OwnerId,AccountHolder,IsActive,FinancialInstitution,AccountNumber,AccountTypeId,AssetTypeId,CurrencyTypeId")] PortfolioAccountViewModel model)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(portfolioAccount).State = EntityState.Modified;
-                db.SaveChanges();
+                var portfolioAccount = Mapper.Map<PortfolioAccount>(model);
+                _unitOfWork.PortfolioAccounts.Update(portfolioAccount);
+                _unitOfWork.Complete();
                 return RedirectToAction("Index");
             }
-            ViewBag.AccountTypeId = new SelectList(db.AccountTypes, "Id", "Name", portfolioAccount.AccountTypeId);
-            ViewBag.AssetTypeId = new SelectList(db.AssetTypes, "Id", "TypeName", portfolioAccount.AssetTypeId);
-            ViewBag.CurrencyTypeId = new SelectList(db.CurrencyTypes, "Id", "CurrencyName", portfolioAccount.CurrencyTypeId);
-            return View(portfolioAccount);
+            SetupSelectList(model);
+            return View(model);
         }
 
         // GET: PortfolioAccounts/Delete/5
@@ -136,12 +134,14 @@ namespace TNW.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            PortfolioAccount portfolioAccount = db.PortfolioAccounts.Find(id);
+            var portfolioAccount = _unitOfWork
+                .PortfolioAccounts.Get(p => p.Id == id.Value, p => p.AccountType, p => p.AssetType, p => p.CurrencyType);
             if (portfolioAccount == null)
             {
                 return HttpNotFound();
             }
-            return View(portfolioAccount);
+            var vm = Mapper.Map<PortfolioAccountViewModel>(portfolioAccount);
+            return View(vm);
         }
 
         // POST: PortfolioAccounts/Delete/5
@@ -149,19 +149,10 @@ namespace TNW.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            PortfolioAccount portfolioAccount = db.PortfolioAccounts.Find(id);
-            db.PortfolioAccounts.Remove(portfolioAccount);
-            db.SaveChanges();
+            var portfolioAccount = _unitOfWork.PortfolioAccounts.Get(id);
+            _unitOfWork.PortfolioAccounts.Remove(portfolioAccount);
+            _unitOfWork.Complete();
             return RedirectToAction("Index");
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                db.Dispose();
-            }
-            base.Dispose(disposing);
         }
     }
 }
