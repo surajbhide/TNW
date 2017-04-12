@@ -8,6 +8,8 @@ using System.Web;
 using System.Web.Mvc;
 using AutoMapper;
 using Microsoft.AspNet.Identity;
+using TNW.Controllers.Filters;
+using TNW.Extensions;
 using TNW.Infrastructure;
 using TNW.Interfaces;
 using TNW.Models;
@@ -16,20 +18,17 @@ using TNW.ViewModels;
 namespace TNW.Controllers
 {
     [Authorize]
-    public class AccountTypesController : Controller
+    public class AccountTypesController : ControllerBase
     {
-        IUnitOfWork _unitOfWork;
-
-        public AccountTypesController(IUnitOfWork uow)
+        public AccountTypesController(IUnitOfWork uow) : base(uow)
         {
-            _unitOfWork = uow;
         }
 
         // GET: AccountTypes
         public ActionResult Index()
         {
-            var accountTypes = _unitOfWork.AccountTypes.GetAll();
-            var viewModel = Mapper.Map<List<AccountTypeViewModel>>(accountTypes);
+            var accountTypes = _unitOfWork.AccountTypes.GetAll(a => a.OwnerId == UserId);
+            var viewModel = Mapper.Map<List<AccountTypeSummaryViewModel>>(accountTypes);
             return View(viewModel);
         }
 
@@ -42,7 +41,7 @@ namespace TNW.Controllers
         // POST: AccountTypes/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Name,Comments")] AccountTypeViewModel model)
+        public ActionResult Create(AccountTypeViewModel model)
         {
             if (ModelState.IsValid)
             {
@@ -68,6 +67,11 @@ namespace TNW.Controllers
             {
                 return HttpNotFound();
             }
+            // if the user is not authorized to view this account say so
+            if (ac.OwnerId != UserId)
+            {
+                return new HttpUnauthorizedResult("You are not authorized to edit this record.");
+            }
             var vm = Mapper.Map<AccountTypeViewModel>(ac);
             return View(vm);
         }
@@ -75,11 +79,21 @@ namespace TNW.Controllers
         // POST: AccountTypes/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Name,Comments")] AccountTypeViewModel model)
+        public ActionResult Edit(int id, AccountTypeViewModel model)
         {
             if (ModelState.IsValid)
             {
-                var accountType = Mapper.Map<AccountType>(model);
+                // ensure the id is valid and belongs to this user.
+                var accountType = _unitOfWork.AccountTypes.Get(id);
+                if (accountType == null)
+                {
+                    return HttpNotFound();
+                }
+                if (accountType.OwnerId != UserId)
+                {
+                    return new HttpUnauthorizedResult("You are not authorized to edit this record.");
+                }
+                Mapper.Map(model, accountType);
                 _unitOfWork.AccountTypes.Update(accountType);
                 _unitOfWork.Complete();
                 return RedirectToAction("Index");
@@ -99,6 +113,10 @@ namespace TNW.Controllers
             {
                 return HttpNotFound();
             }
+            if (accountType.OwnerId != UserId)
+            {
+                return new HttpUnauthorizedResult("You are not authorized to delete this record.");
+            }
             return View(Mapper.Map<AccountTypeViewModel>(accountType));
         }
 
@@ -111,6 +129,10 @@ namespace TNW.Controllers
             if (record == null)
             {
                 return HttpNotFound();
+            }
+            if (record.OwnerId != UserId)
+            {
+                return new HttpUnauthorizedResult("You are not authorized to delete this record.");
             }
             _unitOfWork.AccountTypes.Remove(record);
             _unitOfWork.Complete();
