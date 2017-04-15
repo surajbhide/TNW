@@ -14,6 +14,8 @@ namespace TNW.Models
         public string CurrencyName { get; set; }
         public ICollection<PortfolioAccount> PortfolioAccounts { get; set; }
         public ApplicationUser ApplicationUser { get; set; }
+
+        [Required]
         public string ApplicationUserId { get; set; }
     }
 }

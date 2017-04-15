@@ -270,6 +270,26 @@
     <Compile Include="Migrations\201704020621165_RemovedLotOfRequiredFieldsFromPortfolioAccount.Designer.cs">
       <DependentUpon>201704020621165_RemovedLotOfRequiredFieldsFromPortfolioAccount.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201704151520394_MakeUserfieldRequired.cs" />
+    <Compile Include="Migrations\201704151520394_MakeUserfieldRequired.Designer.cs">
+      <DependentUpon>201704151520394_MakeUserfieldRequired.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201704151522168_MakeOwnerRequiredInAccountType.cs" />
+    <Compile Include="Migrations\201704151522168_MakeOwnerRequiredInAccountType.Designer.cs">
+      <DependentUpon>201704151522168_MakeOwnerRequiredInAccountType.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201704151523092_MakeOwnerRequiredInAssetType.cs" />
+    <Compile Include="Migrations\201704151523092_MakeOwnerRequiredInAssetType.Designer.cs">
+      <DependentUpon>201704151523092_MakeOwnerRequiredInAssetType.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201704151523573_MakeOwnerRequiredInCurrencyType.cs" />
+    <Compile Include="Migrations\201704151523573_MakeOwnerRequiredInCurrencyType.Designer.cs">
+      <DependentUpon>201704151523573_MakeOwnerRequiredInCurrencyType.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201704151527064_MakeOwnerRequiredInPortfolio.cs" />
+    <Compile Include="Migrations\201704151527064_MakeOwnerRequiredInPortfolio.Designer.cs">
+      <DependentUpon>201704151527064_MakeOwnerRequiredInPortfolio.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\CurrencyType.cs" />
     <Compile Include="Models\PortfolioAccount.cs" />
@@ -282,6 +302,7 @@
     <Compile Include="Infrastructure\ApplicationDbContext.cs" />
     <Compile Include="Models\ApplicationUser.cs" />
     <Compile Include="Models\AssetType.cs" />
+    <Compile Include="ViewModels\AssetTypeSummaryViewModel.cs" />
     <Compile Include="ViewModels\AssetTypeViewModel.cs" />
     <Compile Include="ViewModels\CurrencyTypeViewModel.cs" />
     <Compile Include="ViewModels\ManageViewModels.cs" />
@@ -410,6 +431,21 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201704020621165_RemovedLotOfRequiredFieldsFromPortfolioAccount.resx">
       <DependentUpon>201704020621165_RemovedLotOfRequiredFieldsFromPortfolioAccount.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201704151520394_MakeUserfieldRequired.resx">
+      <DependentUpon>201704151520394_MakeUserfieldRequired.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201704151522168_MakeOwnerRequiredInAccountType.resx">
+      <DependentUpon>201704151522168_MakeOwnerRequiredInAccountType.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201704151523092_MakeOwnerRequiredInAssetType.resx">
+      <DependentUpon>201704151523092_MakeOwnerRequiredInAssetType.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201704151523573_MakeOwnerRequiredInCurrencyType.resx">
+      <DependentUpon>201704151523573_MakeOwnerRequiredInCurrencyType.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201704151527064_MakeOwnerRequiredInPortfolio.resx">
+      <DependentUpon>201704151527064_MakeOwnerRequiredInPortfolio.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

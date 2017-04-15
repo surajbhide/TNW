@@ -35,6 +35,11 @@ namespace TNW.Infrastructure
                 .WithMany(a => a.PortfolioAccounts)
                 .WillCascadeOnDelete(false);
 
+            modelBuilder.Entity<PortfolioAccount>()
+                .HasRequired(p => p.CurrencyType)
+                .WithMany(c => c.PortfolioAccounts)
+                .WillCascadeOnDelete(false);
+
             base.OnModelCreating(modelBuilder);
         }
     }

@@ -16,20 +16,17 @@ using TNW.ViewModels;
 namespace TNW.Controllers
 {
     [Authorize]
-    public class AssetTypesController : Controller
+    public class AssetTypesController : ControllerBase
     {
-        private IUnitOfWork _unitOfWork;
-
-        public AssetTypesController(IUnitOfWork uow)
+        public AssetTypesController(IUnitOfWork uow) : base(uow)
         {
-            _unitOfWork = uow;
         }
 
         // GET: AssetTypes
         public ActionResult Index()
         {
-            var assetTypes = _unitOfWork.AssetTypes.GetAll();
-            var assetVM = Mapper.Map<List<AssetTypeViewModel>>(assetTypes);
+            var assetTypes = _unitOfWork.AssetTypes.GetAll(a => a.OwnerId == UserId);
+            var assetVM = Mapper.Map<List<AssetTypeSummaryViewModel>>(assetTypes);
             return View(assetVM);
         }
 
@@ -44,7 +41,7 @@ namespace TNW.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,TypeName,Comments")] AssetTypeViewModel assetType)
+        public ActionResult Create(AssetTypeViewModel assetType)
         {
             if (ModelState.IsValid)
             {
@@ -79,7 +76,7 @@ namespace TNW.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,TypeName,Comments")] AssetTypeViewModel vm)
+        public ActionResult Edit(int id, AssetTypeViewModel vm)
         {
             if (ModelState.IsValid)
             {

@@ -19,7 +19,10 @@ namespace TNW.Models
         public string Comments { get; set; }
 
         public ApplicationUser Owner { get; set; }
+
+        [Required]
         public string OwnerId { get; set; }
+
         public ICollection<PortfolioAccount> PortfolioAccounts { get; set; }
     }
 }

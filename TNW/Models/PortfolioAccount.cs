@@ -13,6 +13,8 @@ namespace TNW.Models
         public int Id { get; set; }
 
         public ApplicationUser Owner { get; set; }
+
+        [Required]
         public string OwnerId { get; set; }
 
         [Display(Name = "Account Holder Name")]
@@ -33,14 +35,19 @@ namespace TNW.Models
         public ICollection<AccountValue> MonthlyBalances { get; set; }
 
         public AccountType AccountType { get; set; }
+
+        [Required]
         public int AccountTypeId { get; set; }
 
         public AssetType AssetType { get; set; }
+
+        [Required]
         public int AssetTypeId { get; set; }
 
         [Display(Name = "Currency")]
         public CurrencyType CurrencyType { get; set; }
 
+        [Required]
         public int CurrencyTypeId { get; set; }
     }
 }

@@ -23,6 +23,8 @@ namespace TNW.Models
         public PortfolioAccount PortfolioAccount { get; set; }
 
         [Display(Name = "Portfolio Account")]
+
+        [Required]
         public int PortfolioAccountId { get; set; }
     }
 }

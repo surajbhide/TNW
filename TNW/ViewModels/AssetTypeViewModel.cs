@@ -9,8 +9,6 @@ namespace TNW.ViewModels
 {
     public class AssetTypeViewModel
     {
-        public int Id { get; set; }
-
         [Required]
         [MaxLength(50)]
         [Display(Name = "Asset Type")]

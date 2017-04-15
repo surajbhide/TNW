@@ -56,13 +56,9 @@ namespace TNW.Controllers
         }
 
         // GET: AccountTypes/Edit/5
-        public ActionResult Edit(int? id)
+        public ActionResult Edit(int id)
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            var ac = _unitOfWork.AccountTypes.Get(id.Value);
+            var ac = _unitOfWork.AccountTypes.Get(id);
             if (ac == null)
             {
                 return HttpNotFound();
@@ -102,13 +98,9 @@ namespace TNW.Controllers
         }
 
         // GET: AccountTypes/Delete/5
-        public ActionResult Delete(int? id)
+        public ActionResult Delete(int id)
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            var accountType = _unitOfWork.AccountTypes.Get(id.Value);
+            var accountType = _unitOfWork.AccountTypes.Get(id);
             if (accountType == null)
             {
                 return HttpNotFound();
