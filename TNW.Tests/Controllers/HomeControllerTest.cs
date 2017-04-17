@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Web.Mvc;
 using NUnit.Framework;
+using TestStack.FluentMVCTesting;
 using TNW;
 using TNW.Controllers;
 
@@ -16,13 +17,12 @@ namespace TNW.Tests.Controllers
         public void Index()
         {
             // Arrange
-            HomeController controller = new HomeController();
 
             // Act
-            ViewResult result = controller.Index() as ViewResult;
+            var sut = new HomeController();
 
             // Assert
-            Assert.IsNotNull(result);
+            sut.WithCallTo(x => x.Index()).ShouldRenderDefaultView();
         }
 
         [Test]

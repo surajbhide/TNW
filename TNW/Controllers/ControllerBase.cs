@@ -9,7 +9,7 @@ using TNW.Interfaces;
 
 namespace TNW.Controllers
 {
-    public class ControllerBase : Controller
+    public abstract class ControllerBase : Controller
     {
         protected IUnitOfWork _unitOfWork;
         protected string UserId => User.Identity.GetUserId();

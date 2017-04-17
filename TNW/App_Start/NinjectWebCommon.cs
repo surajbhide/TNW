@@ -13,6 +13,7 @@ namespace TNW.App_Start
     using Ninject.Extensions.Conventions;
     using TNW.Infrastructure;
     using TNW.Interfaces;
+    using System.Security.Principal;
 
     public static class NinjectWebCommon
     {
@@ -71,6 +72,9 @@ namespace TNW.App_Start
         /// <param name="kernel">The kernel.</param>
         private static void RegisterServices(IKernel kernel)
         {
+            kernel.Bind<IPrincipal>()
+                .ToMethod(ctx => HttpContext.Current.User)
+                .InRequestScope();
         }
     }
 }
